@@ -10,6 +10,11 @@ navigator.getUserMedia  = navigator.getUserMedia ||
                           navigator.msGetUserMedia;
 
 function onWindowLoad(){
+	//adds event listener
+	var takePhoto = document.getElementById('takePhto');
+	takePhoto.addEventListener('click', onTakePhto, false);
+	
+	
 	
 	//appends the video tag
 	videoElement = document.createElement('video');
@@ -57,9 +62,7 @@ function canvasApp(){
 	theCanvas.width = 650;
 	theCanvas.height = 450;
 	var context = theCanvas.getContext('2d');
-	
-	
-	//videoElement.setAttribute('style', 'display: none;');
+	videoElement.setAttribute('style', 'display: none;');
 	
 	
 	
@@ -69,20 +72,20 @@ function canvasApp(){
 		
 		context.drawImage(videoElement, 0, 0);
 		
-		console.log("The draw screen function is being called");
 		
 	}
 	
-	setInterval(drawScreen, 300);
+	setInterval(drawScreen, 30);
 	
+	function onClickPhoto(e){
+	var target = e.target;
+	target.href = theCanvas.toDataURL('image/jpg', 0.8);	
 	
+	}
 	
 	
 }
 
-function onClickPhoto(e){
-	var target = e.target;
-	
-}
+
 
 
