@@ -2,6 +2,8 @@ window.addEventListener('load', onWindowLoad, false);
 //creates global variables
 var imgElement;
 var videoElement;
+var takePhoto = document.getElementById('takePhoto');
+takePhoto.addEventListener('click', onClickPhoto, false);
 
 navigator.getUserMedia  = navigator.getUserMedia ||
                           navigator.webkitGetUserMedia ||
@@ -40,10 +42,44 @@ function process(webcam){
 	videoElement.setAttribute('width', '650');
 	videoElement.setAttribute('height', '450');
 	
+	
+	
 }
 
 function backup(webcam){
-	window.alert("Something went wrong with your webcam! Make you have a working camera");
+	window.alert("Something went wrong with your webcam! Make you have a working camera or that is not being used in another program!");
+}
+
+function canvasApp(){
+	var theCanvas = document.createElement('canvas');
+	theCanvas.width = 650;
+	theCanvas.height = 450;
+	var context = theCanvas.getContext('2d');
+	
+	videoElement.setAttribute('style', 'display: none;');
+	
+	
+	
+	function drawScreen(){
+		//clears canvas
+		context.clearRect(0,0, theCanvas.width, theCanvas.height);
+		
+		context.drawImage(videoElement, 0, 0);
+		
+		
+		
+	}
+	
+	setInterval(drawScreen, 300);
+	
+	
+	
+	
+}
+
+function onClickPhoto(e){
+	var target = e.target;
+	
 }
 
 
