@@ -42,6 +42,8 @@ function process(webcam){
 	videoElement.setAttribute('width', '650');
 	videoElement.setAttribute('height', '450');
 	
+	canvasApp();
+	
 	
 	
 }
