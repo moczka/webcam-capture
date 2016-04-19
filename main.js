@@ -2,8 +2,7 @@ window.addEventListener('load', onWindowLoad, false);
 //creates global variables
 var imgElement;
 var videoElement;
-var takePhoto = document.getElementById('takePhoto');
-takePhoto.addEventListener('click', onClickPhoto, false);
+
 
 navigator.getUserMedia  = navigator.getUserMedia ||
                           navigator.webkitGetUserMedia ||
