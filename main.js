@@ -11,8 +11,6 @@ navigator.getUserMedia  = navigator.getUserMedia ||
 
 function onWindowLoad(){
 	//adds event listener
-	var takePhoto = document.getElementById('takePhto');
-	takePhoto.addEventListener('click', onTakePhto, false);
 	
 	
 	
