@@ -55,6 +55,7 @@ function canvasApp(){
 	theCanvas.width = 650;
 	theCanvas.height = 450;
 	var context = theCanvas.getContext('2d');
+	document.body.appendChild(theCanvas);
 	
 	videoElement.setAttribute('style', 'display: none;');
 	
