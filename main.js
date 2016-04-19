@@ -78,7 +78,7 @@ function canvasApp(){
 	setInterval(drawScreen, 30);
 	
 	var takePhoto = document.getElementById('takePhoto');
-	takePhoto.href = theCanvas.toDataURL('image/png');
+	takePhoto.href = theCanvas.toDataURL('image/png') ;
 	
 	
 }
