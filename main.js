@@ -53,12 +53,13 @@ function backup(webcam){
 
 function canvasApp(){
 	var theCanvas = document.createElement('canvas');
+	document.body.appendChild(theCanvas);
 	theCanvas.width = 650;
 	theCanvas.height = 450;
 	var context = theCanvas.getContext('2d');
-	document.body.appendChild(theCanvas);
 	
-	videoElement.setAttribute('style', 'display: none;');
+	
+	//videoElement.setAttribute('style', 'display: none;');
 	
 	
 	
@@ -68,7 +69,7 @@ function canvasApp(){
 		
 		context.drawImage(videoElement, 0, 0);
 		
-		
+		console.log("The draw screen function is being called");
 		
 	}
 	
