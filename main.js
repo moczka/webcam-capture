@@ -11,7 +11,7 @@ function onWindowLoad(){
 	videoElement = myWebcam.begin();
 	
 	if(!myWebcam.support){
-		window.alert(videoElement);
+		window.alert(videoElement.innerHTML);
 	}
 	
 	videoElement.setAttribute('id', 'cameraVideo');
