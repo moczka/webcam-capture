@@ -9,6 +9,11 @@ function onWindowLoad(){
 	var myWebcam = new Webcam(false);
 	var videoElement;
 	videoElement = myWebcam.begin();
+	
+	if(!myWebcam.support){
+		window.alert(videoElement);
+	}
+	
 	videoElement.setAttribute('id', 'cameraVideo');
 	
 	$('#camera').appendChild(videoElement);
