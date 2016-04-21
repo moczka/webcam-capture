@@ -1,86 +1,97 @@
 window.addEventListener('load', onWindowLoad, false);
-//creates global variables
-var imgElement;
-var videoElement;
 
-
-navigator.getUserMedia  = navigator.getUserMedia ||
+function onWindowLoad(){
+	
+	var takePhoto = $('#takePhoto');
+	takePhoto.addEventListener('click', onTakePhoto, false);
+	var cameraSwitch = $('#cameraSwitch');
+	cameraSwitch.addEventListener('click', onCameraSwitch, false);
+	var myWebcam = new Webcam(false);
+	var videoElement;
+	videoElement = myWebcam.begin();
+	videoElement.setAttribute('id', 'cameraVideo');
+	
+	$('#camera').appendChild(videoElement);
+	var theCanvas = document.createElement('canvas');
+	var context = theCanvas.getContext('2d');
+	theCanvas.width = 640;
+	theCanvas.height = 480;
+	
+	function onTakePhoto(e){
+		var target = e.target;
+		context.drawImage(videoElement, 0, 0);
+		target.href = theCanvas.toDataURL('image/jpeg');
+		
+	}
+	function onCameraSwitch(e){
+		var target = e.target;
+	
+		if(myWebcam.running){
+			myWebcam.stop();
+			target.value = "ON";
+			target.setAttribute('style', 'background-color: rgba(0, 150, 0, 0.5);');
+		}else if(!myWebcam.running){
+			videoElement = myWebcam.begin();
+			target.value = "OFF";
+			target.setAttribute('style', 'background-color: rgba(150, 0, 0, 0.5);');
+		}
+	}
+}
+function Webcam(audioB, videoB){
+	audioB = (audioB === undefined)? true: audioB;
+	videoB = (videoB === undefined)? true: videoB;
+	var video = document.createElement('video');
+	var mediaStream;
+	navigator.getUserMedia  = navigator.getUserMedia ||
                           navigator.webkitGetUserMedia ||
                           navigator.mozGetUserMedia ||
                           navigator.msGetUserMedia;
-
-function onWindowLoad(){
-	//adds event listener
-	
-	
-	
-	//appends the video tag
-	videoElement = document.createElement('video');
-	document.body.appendChild(videoElement);
-	
-	if(navigator.getUserMedia){
-		console.log(navigator.getUserMedia);
-		navigator.getUserMedia({audio:false, video:true}, process, backup);
-		
-	}else{
-		window.alert("Your browser does not support a webcam, download latest version of Google Chrome!");
+	this.support = navigator.getUserMedia;
+	this.running = false;
+	var self = this;
+	this.begin = function(){
+		if(navigator.getUserMedia){
+			navigator.getUserMedia({audio:audioB, video:videoB}, successCall, failCall);
+		}else{
+			video = document.createElement('p');
+			video.innerHTML = "Your browser does not support webcam capture, download the latest version of Google Chrome";
+		}
+		function successCall(stream){
+		  mediaStream = stream;
+			video.autoplay = true;
+			video.src = window.URL.createObjectURL(stream);
+			self.running = mediaStream.active;
+			self.cameraName = mediaStream.getTracks()[0].label;
+		}
+		function failCall(stream){
+		  mediaStream = stream;
+			video = document.createElement('p');
+			self.running = false;
+			video.innerHTML = "Something went wrong with your camera or it is currently in use.";
+		}
+		return video;
+	};
+	this.stopVideo = function(){
+	    if(mediaStream.getVideoTracks()[0].enabled){
+	      mediaStream.getVideoTracks()[0].stop();
+	    }
+	};
+	this.stopAudio = function(){
+	    if(mediaStream.getVideoTracks()[0].enabled){
+	      mediaStream.getAudioTracks()[0].stop();
+	    }
+	};
+	this.cameraName = "Camera is not running" ;
+	this.stop = function(){
+		if(self.running){
+			self.running = false;
+			for(var i=0; i<mediaStream.getTracks().length; i++){
+				mediaStream.getTracks()[i].stop();
+			}		
+		}
 	}
-
-	
-	videoElement = document.createElement('video');
-	document.body.appendChild(videoElement);
-	videoElement.setAttribute('autoplay', true);
-	videoElement.setAttribute('width', '650');
-	videoElement.setAttribute('height', '450');
-	
-	
 }
-
-//processes the webcam info
-function process(webcam){
-	
-	videoElement.src = window.URL.createObjectURL(webcam);
-	videoElement.setAttribute('autoplay', true);
-	videoElement.setAttribute('width', '650');
-	videoElement.setAttribute('height', '450');
-	
-	canvasApp();
-	
-	
-	
+function $(selector){
+	return document.querySelector(selector);
 }
-
-function backup(webcam){
-	window.alert("Something went wrong with your webcam! Make you have a working camera or that is not being used in another program!");
-}
-
-function canvasApp(){
-	var theCanvas = document.createElement('canvas');
-	document.body.appendChild(theCanvas);
-	theCanvas.width = 650;
-	theCanvas.height = 450;
-	var context = theCanvas.getContext('2d');
-	videoElement.setAttribute('style', 'display: none;');
-	
-	
-	
-	function drawScreen(){
-		//clears canvas
-		context.clearRect(0,0, theCanvas.width, theCanvas.height);
-		
-		context.drawImage(videoElement, 0, 0);
-		
-		
-	}
-	
-	setInterval(drawScreen, 30);
-	
-	var takePhoto = document.getElementById('takePhoto');
-	takePhoto.href = theCanvas.toDataURL('image/png') ;
-	
-	
-}
-
-
-
 
