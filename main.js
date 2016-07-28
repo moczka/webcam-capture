@@ -6,14 +6,11 @@ function onWindowLoad(){
 	takePhoto.addEventListener('click', onTakePhoto, false);
 	var cameraSwitch = $('#cameraSwitch');
 	cameraSwitch.addEventListener('click', onCameraSwitch, false);
-	var myWebcam = new Webcam(false);
+	var recordButton = $('#recordVideo');
+	recordButton.addEventListener('click', onRecordButton, false);
+	var myWebcam = new Webcam(false, true);
 	var videoElement;
 	videoElement = myWebcam.begin();
-	
-	if(!myWebcam.support){
-		window.alert(videoElement.innerHTML);
-	}
-	
 	videoElement.setAttribute('id', 'cameraVideo');
 	
 	$('#camera').appendChild(videoElement);
@@ -40,6 +37,17 @@ function onWindowLoad(){
 			target.value = "OFF";
 			target.setAttribute('style', 'background-color: rgba(150, 0, 0, 0.5);');
 		}
+	}
+	function onRecordButton(e){
+	  var target = e.target;
+	  if(target.value == "RECORD" && myWebcam.running){
+	    //record video
+	    target.value = "RECORDING";
+	    target.setAttribute('style','background-color: rgba(150,0,0, 0.5);');
+	  }else if(target.value == "RECORDING"){
+	    target.setAttribute('style','background-color: rgba(0,0,150, 0.5);');
+	    target.value = "RECORD";
+    	}
 	}
 }
 function Webcam(audioB, videoB){
@@ -90,11 +98,11 @@ function Webcam(audioB, videoB){
 	this.stop = function(){
 		if(self.running){
 			self.running = false;
-			for(var i=0; i<mediaStream.getTracks().length; i++){
+	    for(var i=0; i<mediaStream.getTracks().length; i++){
 				mediaStream.getTracks()[i].stop();
-			}		
+			}	
 		}
-	}
+	};
 }
 function $(selector){
 	return document.querySelector(selector);
