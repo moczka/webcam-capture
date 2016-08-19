@@ -60,8 +60,11 @@ function Webcam(audioB, videoB){
                           navigator.mozGetUserMedia ||
                           navigator.msGetUserMedia;
 	this.support = navigator.getUserMedia;
+    
 	this.running = false;
+    
 	var self = this;
+    
 	this.begin = function(){
 		if(navigator.getUserMedia){
 			navigator.getUserMedia({audio:audioB, video:videoB}, successCall, failCall);

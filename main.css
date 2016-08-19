@@ -21,6 +21,13 @@ html,body{
 	bottom: 30px;
 }
 
+p{
+   background: #fff;
+    color: yellow;
+    font-size: 1.5em;
+    padding: 20px;
+}
+
 
 .cameraButton{
 	width: 100px;
