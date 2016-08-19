@@ -30,23 +30,23 @@ function onWindowLoad(){
 	
 		if(myWebcam.running){
 			myWebcam.stop();
-			target.value = "ON";
+			target.innerHTML = "ON";
 			target.setAttribute('style', 'background-color: rgba(0, 150, 0, 0.5);');
 		}else if(!myWebcam.running){
 			videoElement = myWebcam.begin();
-			target.value = "OFF";
+			target.innerHTML = "OFF";
 			target.setAttribute('style', 'background-color: rgba(150, 0, 0, 0.5);');
 		}
 	}
 	function onRecordButton(e){
 	  var target = e.target;
-	  if(target.value == "RECORD" && myWebcam.running){
+	  if(target.innerHTML == "RECORD" && myWebcam.running){
 	    //record video
-	    target.value = "RECORDING";
+	    target.innerHTML = "RECORDING";
 	    target.setAttribute('style','background-color: rgba(150,0,0, 0.5);');
-	  }else if(target.value == "RECORDING"){
+	  }else if(target.innerHTML == "RECORDING"){
 	    target.setAttribute('style','background-color: rgba(0,0,150, 0.5);');
-	    target.value = "RECORD";
+	    target.innerHTML = "RECORD";
     	}
 	}
 }
